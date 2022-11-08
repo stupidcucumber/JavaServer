@@ -59,6 +59,9 @@ public class Server {
                     try {
                         checkQuasiFile(new File(uCommand[1]));
                     } catch (Exception exception) {
+                        PrintWriter printWriter = new PrintWriter(currentClient.getOutputStream());
+                        printWriter.println(exception.getMessage());
+                        printWriter.flush();
                     }
 
                     PrintWriter printWriter = new PrintWriter(currentClient.getOutputStream());
@@ -105,7 +108,9 @@ public class Server {
 
         PrintWriter printWriter = new PrintWriter(currentClient.getOutputStream());
         if(!file.exists()){
-            throw new RuntimeException("File you provided doesn't exist!");
+            printWriter.println("\\~");
+            printWriter.flush();
+            throw new RuntimeException("File you provided doesn't exist on a server!");
         }
 
         printWriter.println("accepted");
